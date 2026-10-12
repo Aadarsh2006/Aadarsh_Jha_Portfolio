@@ -1,0 +1,159 @@
+
+.experience-section {
+  position: relative;
+  padding: 120px 10vw 100px;
+  border-top: 1px solid rgba(167, 139, 250, 0.35);
+}
+
+.experience-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.experience-heading {
+  max-width: 780px;
+}
+
+.experience-heading h2 {
+  margin-top: 20px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2.8rem, 6vw, 5rem);
+  font-weight: 500;
+  letter-spacing: -0.065em;
+  line-height: 1.1;
+}
+
+.experience-heading h2 span {
+  display: block;
+  color: #888894;
+}
+
+.experience-heading > p {
+  margin-top: 22px;
+  color: #a4a4af;
+  font-size: 0.95rem;
+  line-height: 1.8;
+}
+
+.experience-list {
+  margin-top: 65px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.experience-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 55px minmax(0, 1fr) 25px;
+  gap: 24px;
+  align-items: start;
+  padding: 32px 10px;
+  border-bottom: 1px solid rgba(167, 139, 250, 0.25);
+  transition: background 0.3s ease;
+}
+
+.experience-item:hover {
+  background: rgba(167, 139, 250, 0.035);
+}
+
+.experience-index {
+  padding-top: 3px;
+  color: #a78bfa;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.85rem;
+}
+
+.experience-content {
+  min-width: 0;
+}
+
+.experience-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+  color: #a78bfa;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+}
+
+.experience-type {
+  padding: 5px 8px;
+  border: 1px solid rgba(167, 139, 250, 0.25);
+  border-radius: 3px;
+  color: #b7a5ff;
+  font-size: 0.6rem;
+}
+
+.experience-content h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.15rem, 2vw, 1.55rem);
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.experience-company {
+  margin-top: 8px;
+  color: #dedee8;
+  font-size: 0.95rem;
+}
+
+.experience-description {
+  max-width: 700px;
+  margin-top: 16px;
+  color: #9696a3;
+  font-size: 0.9rem;
+  line-height: 1.9;
+}
+
+.experience-arrow {
+  padding-top: 2px;
+  color: #777782;
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.experience-item:hover .experience-arrow {
+  color: #c4b5fd;
+  transform: translate(3px, -3px);
+}
+
+@media (max-width: 800px) {
+  .experience-section {
+    padding: 90px 7vw 75px;
+  }
+
+  .experience-list {
+    margin-top: 45px;
+  }
+
+  .experience-item {
+    grid-template-columns: 30px minmax(0, 1fr) 15px;
+    gap: 14px;
+    padding: 28px 4px;
+  }
+}
+
+@media (max-width: 500px) {
+  .experience-section {
+    padding: 80px 6vw 60px;
+  }
+
+  .experience-item {
+    grid-template-columns: 22px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .experience-arrow {
+    display: none;
+  }
+
+  .experience-meta {
+    font-size: 0.62rem;
+  }
+
+  .experience-description {
+    font-size: 0.86rem;
+  }
+}

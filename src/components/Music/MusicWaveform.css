@@ -1,0 +1,70 @@
+
+.music-waveform {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 34px;
+}
+
+.waveform-label {
+  color: #9693a5;
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.17em;
+}
+
+.waveform-bars {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 52px;
+}
+
+.waveform-bar {
+  display: block;
+  width: 3px;
+  height: var(--bar-height);
+  border-radius: 5px;
+  background: linear-gradient(
+    to top,
+    #7861d8,
+    #c4b5fd
+  );
+  opacity: 0.85;
+  transform-origin: center;
+  animation: waveform-motion 1.15s ease-in-out infinite alternate;
+  animation-delay: var(--bar-delay);
+}
+
+@keyframes waveform-motion {
+  0% {
+    transform: scaleY(0.35);
+    opacity: 0.55;
+  }
+
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .waveform-bar {
+    animation: none;
+  }
+}
+
+@media (max-width: 500px) {
+  .music-waveform {
+    margin-bottom: 25px;
+  }
+
+  .waveform-label {
+    font-size: 0.58rem;
+  }
+
+  .waveform-bars {
+    gap: 3px;
+  }
+}

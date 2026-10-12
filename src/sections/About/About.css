@@ -1,0 +1,126 @@
+
+.about-section {
+  position: relative;
+  padding: 130px 10vw 100px;
+  border-top: 1px solid rgba(167, 139, 250, 0.35);
+}
+
+.about-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Section heading */
+.section-heading {
+  max-width: 850px;
+}
+
+.section-eyebrow {
+  display: block;
+  margin-bottom: 24px;
+  color: #b7a5ff;
+  font-size: 0.72rem;
+  letter-spacing: 0.17em;
+}
+
+.section-heading h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2.8rem, 6vw, 5.4rem);
+  font-weight: 500;
+  letter-spacing: -0.065em;
+  line-height: 1.08;
+  overflow-wrap: break-word;
+}
+
+.section-heading h2 span {
+  display: block;
+  color: #888894;
+}
+
+/* Label below the heading */
+.about-marker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 38px;
+  color: #92929e;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+}
+
+.about-marker-dot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #a78bfa;
+  box-shadow: 0 0 14px rgba(167, 139, 250, 0.6);
+}
+
+/* Description below GET TO KNOW ME */
+.about-copy {
+  max-width: 850px;
+  margin-top: 28px;
+}
+
+.about-copy p {
+  margin-bottom: 22px;
+  color: #a4a4af;
+  font-size: 0.98rem;
+  line-height: 1.95;
+}
+
+.about-copy .about-lead {
+  color: #eeeef5;
+  font-size: clamp(1.2rem, 2vw, 1.7rem);
+  line-height: 1.65;
+}
+
+/* Tablet */
+@media (max-width: 800px) {
+  .about-section {
+    padding: 100px 7vw 75px;
+  }
+
+  .section-heading h2 {
+    font-size: clamp(2.7rem, 8vw, 4rem);
+  }
+
+  .about-marker {
+    margin-top: 30px;
+  }
+
+  .about-copy {
+    margin-top: 24px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 500px) {
+  .about-section {
+    padding: 80px 6vw 60px;
+  }
+
+  .section-eyebrow {
+    margin-bottom: 18px;
+  }
+
+  .section-heading h2 {
+    font-size: clamp(2.3rem, 10vw, 3.3rem);
+  }
+
+  .about-marker {
+    font-size: 0.65rem;
+  }
+
+  .about-copy .about-lead {
+    font-size: 1.15rem;
+  }
+
+  .about-copy p {
+    font-size: 0.92rem;
+    line-height: 1.85;
+  }
+}
