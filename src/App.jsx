@@ -60,11 +60,11 @@ function App() {
               </a>
 
               <a
-                href="/resume/Aadarsh_Jha_CV_Updated.pdf"
+                href="/resume/Aadarsh_Jha_Resume_Updated.pdf"
                 className="hero-button"
-                download="Aadarsh_Jha_CV.pdf"
+                download="Aadarsh_Jha_Resume.pdf"
               >
-                Download CV ↓
+                Download Resume ↓
               </a>
 
 

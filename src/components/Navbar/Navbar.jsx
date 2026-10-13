@@ -30,7 +30,7 @@ function Navbar() {
         target="_blank"
         rel="noreferrer"
       >
-        Resume <span>↗</span>
+        View CV <span>↗</span>
       </a>
     </header>
   );
