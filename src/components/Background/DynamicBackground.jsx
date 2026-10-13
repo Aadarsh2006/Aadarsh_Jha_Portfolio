@@ -1,3 +1,4 @@
+
 import { useEffect, useRef } from 'react';
 import './DynamicBackground.css';
 
@@ -20,6 +21,11 @@ function DynamicBackground() {
 
     let animationFrame;
     let particles = [];
+
+    // Disable pointer interaction on touch-first mobile devices.
+    const isTouchDevice = window.matchMedia(
+      '(hover: none) and (pointer: coarse)'
+    ).matches;
 
     const resizeCanvas = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -46,38 +52,26 @@ function DynamicBackground() {
       particles = Array.from({ length: count }, () => ({
         x: Math.random() * window.innerWidth,
         y: Math.random() * window.innerHeight,
-
         radius: Math.random() * 1.8 + 0.5,
-
         speed: Math.random() * 0.55 + 0.15,
-
         drift: Math.random() * 0.5 - 0.25,
-
         phase: Math.random() * Math.PI * 2,
-
         opacity: Math.random() * 0.55 + 0.25,
       }));
     };
 
     const handleMouseMove = (event) => {
+      // Preserve the existing desktop mouse interaction.
+      if (isTouchDevice || event.pointerType === 'touch') return;
+
       mouseRef.current.x = event.clientX;
       mouseRef.current.y = event.clientY;
     };
 
-    const drawOrb = (
-      x,
-      y,
-      radius,
-      color,
-      alpha
-    ) => {
+    const drawOrb = (x, y, radius, color, alpha) => {
       const gradient = ctx.createRadialGradient(
-        x,
-        y,
-        0,
-        x,
-        y,
-        radius
+        x, y, 0,
+        x, y, radius
       );
 
       gradient.addColorStop(
@@ -96,7 +90,6 @@ function DynamicBackground() {
       );
 
       ctx.fillStyle = gradient;
-
       ctx.beginPath();
       ctx.arc(x, y, radius, 0, Math.PI * 2);
       ctx.fill();
@@ -108,21 +101,24 @@ function DynamicBackground() {
 
       ctx.clearRect(0, 0, width, height);
 
-      /*
-       * Smooth cursor movement
-       */
-      smoothMouseRef.current.x +=
-        (mouseRef.current.x - smoothMouseRef.current.x) * 0.08;
+      // Smooth cursor movement on desktop only.
+      if (!isTouchDevice) {
+        smoothMouseRef.current.x +=
+          (mouseRef.current.x - smoothMouseRef.current.x) * 0.08;
 
-      smoothMouseRef.current.y +=
-        (mouseRef.current.y - smoothMouseRef.current.y) * 0.08;
+        smoothMouseRef.current.y +=
+          (mouseRef.current.y - smoothMouseRef.current.y) * 0.08;
+      }
 
-      const mouseX = smoothMouseRef.current.x;
-      const mouseY = smoothMouseRef.current.y;
+      const mouseX = isTouchDevice
+        ? -10000
+        : smoothMouseRef.current.x;
 
-      /*
-       * Large ambient moving orbs
-       */
+      const mouseY = isTouchDevice
+        ? -10000
+        : smoothMouseRef.current.y;
+
+      // Large ambient moving orbs.
       const orb1X =
         width * 0.25 +
         Math.sin(time * 0.00035) * width * 0.12;
@@ -155,39 +151,32 @@ function DynamicBackground() {
         0.12
       );
 
-      /*
-       * Strong cursor glow
-       */
-      drawOrb(
-        mouseX,
-        mouseY,
-        320,
-        '150, 100, 255',
-        0.20
-      );
+      // Cursor glows remain unchanged on desktop.
+      if (!isTouchDevice) {
+        drawOrb(
+          mouseX,
+          mouseY,
+          320,
+          '150, 100, 255',
+          0.20
+        );
 
-      /*
-       * Secondary cursor halo
-       */
-      drawOrb(
-        mouseX,
-        mouseY,
-        130,
-        '100, 200, 255',
-        0.16
-      );
+        drawOrb(
+          mouseX,
+          mouseY,
+          130,
+          '100, 200, 255',
+          0.16
+        );
+      }
 
-      /*
-       * Particles
-       */
+      // Floating particles.
       particles.forEach((particle) => {
         particle.y -= particle.speed;
 
         particle.x +=
           particle.drift +
-          Math.sin(
-            time * 0.0007 + particle.phase
-          ) * 0.15;
+          Math.sin(time * 0.0007 + particle.phase) * 0.15;
 
         if (particle.y < -10) {
           particle.y = height + 10;
@@ -205,51 +194,30 @@ function DynamicBackground() {
         const dx = particle.x - mouseX;
         const dy = particle.y - mouseY;
 
-        const distance = Math.sqrt(
-          dx * dx + dy * dy
-        );
+        const distance = Math.sqrt(dx * dx + dy * dy);
 
         const influenceRadius = 300;
 
-        const influence = Math.max(
-          0,
-          1 - distance / influenceRadius
-        );
+        const influence = isTouchDevice
+          ? 0
+          : Math.max(0, 1 - distance / influenceRadius);
 
-        /*
-         * Particles move slightly toward cursor
-         */
+        // Particles move toward the cursor on desktop only.
         if (influence > 0) {
           particle.x +=
-            (mouseX - particle.x) *
-            influence *
-            0.006;
+            (mouseX - particle.x) * influence * 0.006;
 
           particle.y +=
-            (mouseY - particle.y) *
-            influence *
-            0.006;
+            (mouseY - particle.y) * influence * 0.006;
         }
 
-        const size =
-          particle.radius +
-          influence * 2.2;
+        const size = particle.radius + influence * 2.2;
+        const opacity = particle.opacity + influence * 0.35;
 
-        const opacity =
-          particle.opacity +
-          influence * 0.35;
-
-        /*
-         * Particle glow
-         */
-        ctx.shadowBlur =
-          10 + influence * 15;
-
-        ctx.shadowColor =
-          'rgba(160, 130, 255, 0.8)';
+        ctx.shadowBlur = 10 + influence * 15;
+        ctx.shadowColor = 'rgba(160, 130, 255, 0.8)';
 
         ctx.beginPath();
-
         ctx.arc(
           particle.x,
           particle.y,
@@ -258,38 +226,26 @@ function DynamicBackground() {
           Math.PI * 2
         );
 
-        ctx.fillStyle =
-          `rgba(210, 205, 255, ${opacity})`;
-
+        ctx.fillStyle = `rgba(210, 205, 255, ${opacity})`;
         ctx.fill();
 
         ctx.shadowBlur = 0;
       });
 
-      /*
-       * Connect particles that are close to each other
-       */
+      // Connect nearby particles.
       for (let i = 0; i < particles.length; i++) {
-        for (
-          let j = i + 1;
-          j < particles.length;
-          j++
-        ) {
+        for (let j = i + 1; j < particles.length; j++) {
           const a = particles[i];
           const b = particles[j];
 
           const dx = a.x - b.x;
           const dy = a.y - b.y;
-
-          const distance =
-            Math.sqrt(dx * dx + dy * dy);
+          const distance = Math.sqrt(dx * dx + dy * dy);
 
           if (distance < 120) {
-            const opacity =
-              (1 - distance / 120) * 0.10;
+            const opacity = (1 - distance / 120) * 0.10;
 
             ctx.beginPath();
-
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
 
@@ -297,59 +253,32 @@ function DynamicBackground() {
               `rgba(160, 140, 255, ${opacity})`;
 
             ctx.lineWidth = 0.6;
-
             ctx.stroke();
           }
         }
       }
 
-      animationFrame =
-        requestAnimationFrame(draw);
+      animationFrame = requestAnimationFrame(draw);
     };
 
-    window.addEventListener(
-      'resize',
-      resizeCanvas
-    );
-
-    window.addEventListener(
-      'mousemove',
-      handleMouseMove
-    );
+    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('mousemove', handleMouseMove);
 
     resizeCanvas();
-
-    animationFrame =
-      requestAnimationFrame(draw);
+    animationFrame = requestAnimationFrame(draw);
 
     return () => {
-      window.removeEventListener(
-        'resize',
-        resizeCanvas
-      );
-
-      window.removeEventListener(
-        'mousemove',
-        handleMouseMove
-      );
-
-      cancelAnimationFrame(
-        animationFrame
-      );
+      window.removeEventListener('resize', resizeCanvas);
+      window.removeEventListener('mousemove', handleMouseMove);
+      cancelAnimationFrame(animationFrame);
     };
   }, []);
 
   return (
-    <div
-      className="dynamic-background"
-      aria-hidden="true"
-    >
+    <div className="dynamic-background" aria-hidden="true">
       <canvas ref={canvasRef} />
-
       <div className="background-grid" />
-
       <div className="background-noise" />
-
       <div className="background-vignette" />
     </div>
   );
