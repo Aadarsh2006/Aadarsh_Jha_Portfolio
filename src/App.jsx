@@ -46,7 +46,7 @@ function App() {
   rel="noreferrer"
   className="hero-button"
 >
-  LinkedIn <span>↗</span>
+  LinkedIn ↗
 </a>
 
 
