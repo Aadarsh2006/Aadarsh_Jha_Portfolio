@@ -4,22 +4,22 @@ import './Education.css';
 const education = [
   {
     period: '2024 — PRESENT (GRADUATING IN 2028)',
-    degree: 'B.Tech — Computer Science & Engineering (AI)',
-    institution: 'Dr. A.P.J. Abdul Kalam Technical University',
+    degree: 'B.Tech (Computer Science & Engineering - Artificial Intelligence)',
+    institution: 'Dr. A.P.J. Abdul Kalam Technical University, Lucknow',
     location: 'Greater Noida, India',
     status: 'PURSUING',
   },
   {
     period: '2023 — 2024',
-    degree: 'Class XII — CBSE (PCM)',
-    institution: 'Senior Secondary Education',
+    degree: 'Senior Secondary - Class XII (PCM)',
+    institution: 'Central Board of Secondary Education',
     location: 'New Delhi, India',
     status: 'COMPLETED',
   },
   {
     period: '2021 — 2022',
-    degree: 'Class X — CBSE',
-    institution: 'Secondary Education',
+    degree: 'Secondary - Class X',
+    institution: 'Central Board of Secondary Education',
     location: 'New Delhi, India',
     status: 'COMPLETED',
   },
